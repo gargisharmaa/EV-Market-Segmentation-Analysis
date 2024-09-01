@@ -30,7 +30,7 @@ The project utilizes a diverse dataset, comprising:
 The dashboard on the web app provides meaningful insights, including:
 
 * EV trends over the years
-* Required vehicle counts
+* Total vehicle count
 * EV supply in all categories
 * And many more
 ```
