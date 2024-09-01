@@ -137,9 +137,9 @@ st.markdown(
         font-size: 18px;
         color: #1f77b4;
     }
-    .stTable {
-        background-color: #ff6347;
-    }
+    # .stTable {
+    #     background-color: #ff6347;
+    # }
     </style>
     """,
     unsafe_allow_html=True
