@@ -176,7 +176,7 @@ def predict_ev_sales(year, category):
     return np.mean(predictions)
 
 def display_vehicle_requirements_and_production(requirement_vs_having):
-    st.title('Vehicle Requirements and EV Production in India')
+    st.title('Total Number of Vehicles in India')
 
     All_Category = ['TWO WHEELER(NT)', 'LIGHT MOTOR VEHICLE', 'THREE WHEELER(T)',
                     'LIGHT GOODS VEHICLE', 'HEAVY GOODS VEHICLE',
@@ -213,7 +213,7 @@ def display_vehicle_requirements_and_production(requirement_vs_having):
         plt.bar(indices - width, filtered_df['Total Registrations'], width, label='Overall Requirement in the Country')
         plt.bar(indices, filtered_df['Total Across Years'], width, label='EV Category')
 
-        plt.title('Total number of vehicles produced in India')
+        plt.title('Total number of vehicles in India')
         plt.xlabel('Vehicle Class')
         plt.ylabel('Requirement and Production')
         plt.xticks(indices, length, rotation=90)
@@ -351,6 +351,8 @@ if 'EV Sales Analysis' in options:
         st.write("The line chart shows the trends that demonstrate the evolution of the EV market in India since 2015.")
     st.title("Description")
     st.write("This section of the dashboard provides an analysis of EV sales by category and year. Users can filter sales data by selecting a manufacturer and viewing the corresponding sales breakdown in a bar chart. Additionally, a slider allows users to select a specific year to see the sales details for that year. By clicking a button, users can visualize trends in EV manufacturing across various vehicle categories over the years.")
+
+
 if 'EV Makers by Place' in options:
     
     # Function to plot an interactive bar chart using Plotly
@@ -370,7 +372,7 @@ if 'EV Makers by Place' in options:
         # Group the data by the given column and count unique 'EV Maker'
         grouped_data = ev_makers_df.groupby(column_name)['EV Maker'].nunique().reset_index()
         grouped_data.columns = [column_name, 'Unique EV Makers']
-        st.header("Setect locations to see No. of EV Makers")
+        st.header("Select locations to see No. of EV Makers")
         # Add a "Select All" checkbox
         select_all = st.checkbox(f'Select All {section_name}s')
 
@@ -420,12 +422,24 @@ if 'Public Charging Stations' in options:
     state_filter = st.selectbox('Select State', operational_pc_df['State'].unique())
     filtered_pc_data = operational_pc_df[operational_pc_df['State'] == state_filter]
 
-    # Display bar chart
-    st.bar_chart(filtered_pc_data.set_index('State'))
-
-    # Display the number of operational public charging stations
+    # Display number of operational public charging stations
     st.subheader('Number of Operational Public Charging Stations')
-    st.write(f"The number of operational public charging stations in {state_filter} is {filtered_pc_data['No. of Operational PCS'].values[0]}.")
+    if not filtered_pc_data.empty:
+        num_stations = filtered_pc_data['No. of Operational PCS'].values[0]
+        st.write(f"The number of operational public charging stations in {state_filter} is {num_stations}.")
+
+        # Prepare data for the bar chart
+        # Ensure the DataFrame is in the correct format for bar chart plotting
+        chart_data = pd.DataFrame({
+            'State': [state_filter],
+            'Number of Operational PCS': [num_stations]
+        }).set_index('State')
+
+        # Display bar chart
+        st.bar_chart(chart_data)
+
+    else:
+        st.write("No data available for the selected state.")
 
 
 if 'Vehicle Class Registration' in options:
