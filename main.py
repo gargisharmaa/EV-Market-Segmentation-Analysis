@@ -138,7 +138,7 @@ st.markdown(
         color: #1f77b4;
     }
     .stTable {
-        background-color: #ffffff;
+        background-color: #ff6347;
     }
     </style>
     """,
