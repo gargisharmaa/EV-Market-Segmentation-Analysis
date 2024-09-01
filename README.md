@@ -33,5 +33,5 @@ The dashboard on the web app provides meaningful insights, including:
 * Total vehicle count
 * EV supply in all categories
 * And many more
-```
+
 
